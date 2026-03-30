@@ -1,17 +1,27 @@
 <div align="center">
 
-# 🔍 Source Verifier
+# 🛡️ Source Verifier
 
-**信源可靠性研判引擎**
+### 信源可靠性研判引擎
 
-不是帮你搜信息，是帮你判断信息该信几分。
+**基于 NATO Admiralty Code 双维度评估体系的信息可信度验证工具**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Claude Code](https://img.shields.io/badge/Claude_Code-Skill-blueviolet)](https://claude.ai/claude-code)
-[![Gemini CLI](https://img.shields.io/badge/Gemini_CLI-Extension-blue)](https://github.com/google-gemini/gemini-cli)
-[![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey)]()
+<br/>
 
-基于 NATO Admiralty Code 双维度评估体系 · 多源采集 · 交叉验证 · 可解释推理链
+[![Claude Code Skill](https://img.shields.io/badge/Claude_Code-Skill-D97757?style=for-the-badge&logo=claude&logoColor=white)](https://github.com/Luxuzhou/source-verifier-skill)
+[![NATO Admiralty Code](https://img.shields.io/badge/NATO-Admiralty_Code-003366?style=for-the-badge&logoColor=white)](https://en.wikipedia.org/wiki/Admiralty_code)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](./LICENSE)
+
+[![macOS](https://img.shields.io/badge/macOS-supported-000000?style=flat-square&logo=apple&logoColor=white)]()
+[![Linux](https://img.shields.io/badge/Linux-supported-FCC624?style=flat-square&logo=linux&logoColor=black)]()
+[![Windows](https://img.shields.io/badge/Windows-supported-0078D6?style=flat-square&logo=windows&logoColor=white)]()
+
+<br/>
+
+*不是"帮你做研究"，而是"帮你判断信息该信几分"*
+
+[![GitHub stars](https://img.shields.io/github/stars/Luxuzhou/source-verifier-skill?style=social)](https://github.com/Luxuzhou/source-verifier-skill/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/Luxuzhou/source-verifier-skill?style=social)](https://github.com/Luxuzhou/source-verifier-skill/network)
 
 </div>
 
@@ -25,7 +35,7 @@
 | **正反搜索** | 并行搜索支持和反对的证据 |
 | **信源独立性检查** | 5 个来源引用同 1 个原始来源 = 实际只有 1 个 |
 | **矛盾检测** | 自动发现不同来源间的关键分歧 |
-| **沉默信号** | "该报道却没报道"本身就是信号 |
+| **沉默信号分析** | "该报道却没报道"本身就是信号 |
 | **Admiralty 评级** | 双维度评分：来源可靠性 A-F × 信息可信度 1-6 |
 
 ## 🚀 安装
@@ -51,18 +61,21 @@ gemini extensions install https://github.com/Luxuzhou/source-verifier-skill.git
 git clone https://github.com/Luxuzhou/source-verifier-skill.git ~/.claude/skills/source-verifier
 ```
 
-> 纯文本 Skill，不依赖任何二进制或系统调用，macOS / Windows / Linux 均可运行。
+> 纯文本 Skill，不依赖任何二进制或系统调用。核心就是一份结构化 prompt，任何能加载 System Prompt 的 AI Agent 都能用。
 
 ## 📖 快速上手
 
+**验证一条声明：**
 ```
 /source-verifier GPT-5 已经发布
 ```
 
+**验证一篇文章：**
 ```
 /source-verifier https://example.com/some-article
 ```
 
+**对研究报告做信源核查：**
 ```
 /source-verifier
 > 请对刚才的研究报告做全面深度研判
@@ -108,10 +121,9 @@ git clone https://github.com/Luxuzhou/source-verifier-skill.git ~/.claude/skills
 刚发布的版本，可能还有边界情况没覆盖到。欢迎：
 
 - 提 [Issue](https://github.com/Luxuzhou/source-verifier-skill/issues) 反馈 bug 或建议
-- 扩充 Skill 内部的检索工具链（如 Tavily、Brave Search 等 MCP 服务）
+- 扩充 Skill 内部的检索工具链（如 Tavily、Brave Search 等 MCP）
 - Fork 后适配你自己的领域场景
-
-**觉得好用的话，请帮忙点个 ⭐ Star，这对独立开发者真的很重要。**
+- **觉得好用？请点个 ⭐ Star，对独立开发者真的很重要**
 
 ## 📄 License
 
