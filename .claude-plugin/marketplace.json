@@ -1,0 +1,23 @@
+{
+  "name": "source-verifier-marketplace",
+  "owner": {
+    "name": "Luxuzhou",
+    "email": "qthu18447@gmail.com"
+  },
+  "metadata": {
+    "description": "信源可靠性研判引擎 - NATO Admiralty Code based credibility assessment",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "source-verifier",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/Luxuzhou/source-verifier-skill.git"
+      },
+      "description": "信源可靠性研判引擎：不是帮你搜信息，是帮你判断信息该信几分。基于 NATO Admiralty Code 双维度评估。",
+      "version": "0.2.0",
+      "strict": true
+    }
+  ]
+}

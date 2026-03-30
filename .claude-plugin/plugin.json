@@ -1,0 +1,8 @@
+{
+  "name": "source-verifier",
+  "description": "信源可靠性研判引擎：不是帮你搜信息，是帮你判断信息该信几分。基于 NATO Admiralty Code 双维度评估。",
+  "author": {
+    "name": "Luxuzhou",
+    "email": "qthu18447@gmail.com"
+  }
+}
