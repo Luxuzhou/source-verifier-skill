@@ -1,12 +1,34 @@
-# Source Verifier - 信源可靠性研判引擎
+<div align="center">
 
-> 不是帮你搜信息，是帮你判断信息该信几分。
+# 🔍 Source Verifier
 
-一个 AI Agent Skill，基于 NATO Admiralty Code 双维度评估体系，对任意信息进行多源采集、交叉验证和可解释的置信度评级。
+**信源可靠性研判引擎**
 
-支持 Claude Code / Gemini CLI / Codex，兼容 macOS / Windows / Linux。
+不是帮你搜信息，是帮你判断信息该信几分。
 
-## 安装
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-Skill-blueviolet)](https://claude.ai/claude-code)
+[![Gemini CLI](https://img.shields.io/badge/Gemini_CLI-Extension-blue)](https://github.com/google-gemini/gemini-cli)
+[![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey)]()
+
+基于 NATO Admiralty Code 双维度评估体系 · 多源采集 · 交叉验证 · 可解释推理链
+
+</div>
+
+---
+
+## ✨ 核心能力
+
+| 能力 | 说明 |
+|------|------|
+| **声明提取** | 从输入中拆解出可验证的原子声明 |
+| **正反搜索** | 并行搜索支持和反对的证据 |
+| **信源独立性检查** | 5 个来源引用同 1 个原始来源 = 实际只有 1 个 |
+| **矛盾检测** | 自动发现不同来源间的关键分歧 |
+| **沉默信号** | "该报道却没报道"本身就是信号 |
+| **Admiralty 评级** | 双维度评分：来源可靠性 A-F × 信息可信度 1-6 |
+
+## 🚀 安装
 
 ### Claude Code（推荐）
 
@@ -23,93 +45,82 @@ claude plugin install source-verifier
 gemini extensions install https://github.com/Luxuzhou/source-verifier-skill.git
 ```
 
-### Codex / 其他 Agent
+### Git Clone（通用）
 
 ```bash
 git clone https://github.com/Luxuzhou/source-verifier-skill.git ~/.claude/skills/source-verifier
 ```
 
-手动安装也适用于任何支持 Skill/Prompt 加载的 AI Agent 框架。核心文件是 `SKILL.md`（或 `commands/source-verifier.md`），本质是一份结构化的 system prompt。
+> 纯文本 Skill，不依赖任何二进制或系统调用，macOS / Windows / Linux 均可运行。
 
-### Windows 用户提示
+## 📖 快速上手
 
-本 Skill 纯文本驱动，不依赖任何二进制或系统调用，macOS / Linux / Windows 均可正常运行。可选的 Scrapling 内容提取功能需要 `pip install scrapling`，未安装会自动降级到 WebFetch。
-
-## 快速上手
-
-**验证一条声明：**
 ```
 /source-verifier GPT-5 已经发布
 ```
 
-**验证一篇文章：**
 ```
 /source-verifier https://example.com/some-article
 ```
 
-**对已有研究报告做信源核查：**
 ```
 /source-verifier
 > 请对刚才的研究报告做全面深度研判
 ```
 
-## 它会做什么
+## 📊 评级体系
 
-1. **提取声明** — 从你的输入中拆解出可验证的原子声明
-2. **多源采集** — 并行搜索正反两面的证据（WebSearch + DuckDuckGo + HN 等）
-3. **交叉验证** — 检测信源独立性、矛盾点、沉默信号、时间线
-4. **输出研判报告** — 每条声明给出 Admiralty Code 评级 + 完整推理链
-
-## 评级体系
-
-**来源可靠性（A-F）**
+### 来源可靠性（A-F）
 
 | 等级 | 含义 | 示例 |
-|------|------|------|
-| A | 完全可靠 | 当事方官方公告、原始研究论文 |
-| B | 通常可靠 | Reuters、AP、顶级学术期刊 |
-| C | 较为可靠 | 有编辑审核的行业媒体（36氪、InfoQ） |
-| D | 通常不可靠 | 无审核的自媒体、匿名爆料 |
-| E-F | 不可靠/无法判断 | 有虚假传播历史的来源、全新来源 |
+|:---:|------|------|
+| **A** | 完全可靠 | 当事方官方公告、原始研究论文 |
+| **B** | 通常可靠 | Reuters、AP、顶级学术期刊 |
+| **C** | 较为可靠 | 有编辑审核的行业媒体 |
+| **D** | 通常不可靠 | 无审核的自媒体、匿名爆料 |
+| **E-F** | 不可靠 | 已知虚假传播历史 / 无法判断 |
 
-**信息可信度（1-6）**
+### 信息可信度（1-6）
 
-| 等级 | 含义 |
-|------|------|
-| 1 | 已确认（2+ 独立 A/B 级来源） |
-| 2 | 很可能真实（1 个 A/B 来源，无矛盾） |
-| 3 | 可能真实（C 级来源，符合背景） |
-| 4 | 存疑（仅 D 级来源，或有矛盾） |
-| 5-6 | 不太可能/无法判断 |
+| 等级 | 含义 | 判定条件 |
+|:---:|------|---------|
+| **1** | 已确认 | 2+ 独立 A/B 级来源确认 |
+| **2** | 很可能真实 | 1 个 A/B 来源，无矛盾 |
+| **3** | 可能真实 | C 级来源，符合背景 |
+| **4** | 存疑 | 仅 D 级来源，或有矛盾 |
+| **5-6** | 不太可能 / 无法判断 | 与已知事实矛盾 / 信息不足 |
 
-评级示例：`B-2` = 来源通常可靠 + 信息很可能真实。
+> 评级示例：**B-2** = 来源通常可靠 + 信息很可能真实
 
-## 环境要求
+## 🔧 环境要求
 
 - 任何支持 Skill 的 AI Agent（Claude Code / Gemini CLI / Codex）
-- 不需要额外的 API key，Agent 内置的搜索工具就够用
+- **不需要额外的 API key**，Agent 内置的搜索工具就够用
 
 **可选增强**（有则更好，没有也能跑）：
-- `scrapling` — 智能网页内容提取（`pip install scrapling`）
-- DuckDuckGo MCP — 多搜索引擎交叉验证
-- Hacker News MCP — 技术社区讨论信号
+- DuckDuckGo MCP — 多引擎交叉验证
+- Hacker News MCP — 技术社区信号
 - Jina MCP — 备用内容提取
+- `scrapling` — 智能网页提取（`pip install scrapling`）
 
-## 兼容性
+## 🤝 参与贡献
 
-| 平台 | 状态 |
-|------|------|
-| macOS | ✅ 完全支持 |
-| Linux | ✅ 完全支持 |
-| Windows | ✅ 完全支持（纯文本 Skill，无系统依赖） |
-| Claude Code | ✅ 原生插件市场 |
-| Gemini CLI | ✅ Extensions 安装 |
-| Codex | ✅ Skills 目录 |
+刚发布的版本，可能还有边界情况没覆盖到。欢迎：
 
-## License
+- 提 [Issue](https://github.com/Luxuzhou/source-verifier-skill/issues) 反馈 bug 或建议
+- 扩充 Skill 内部的检索工具链（如 Tavily、Brave Search 等 MCP 服务）
+- Fork 后适配你自己的领域场景
 
-MIT
+**觉得好用的话，请帮忙点个 ⭐ Star，这对独立开发者真的很重要。**
+
+## 📄 License
+
+[MIT](LICENSE)
 
 ---
 
-Made by [陆徐洲](https://github.com/Luxuzhou)
+<div align="center">
+
+Made by [陆徐洲](https://github.com/Luxuzhou) · 一家 LIMS 公司的 AI 算法负责人
+
+</div>
