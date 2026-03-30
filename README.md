@@ -4,16 +4,21 @@
 
 一个 Claude Code Skill，基于 NATO Admiralty Code 双维度评估体系，对任意信息进行多源采集、交叉验证和可解释的置信度评级。
 
-## 一键安装
+## 安装
+
+**推荐方式（Claude Code 原生插件）：**
+
+```bash
+claude plugin marketplace add Luxuzhou/source-verifier-skill
+claude plugin install source-verifier
+```
+
+支持一键更新：`claude plugin update source-verifier`
+
+**备选方式（git clone）：**
 
 ```bash
 git clone https://github.com/Luxuzhou/source-verifier-skill.git ~/.claude/skills/source-verifier
-```
-
-或者用安装脚本（支持更新）：
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/Luxuzhou/source-verifier-skill/master/install.sh | bash
 ```
 
 装好后重启 Claude Code，输入 `/source-verifier` 即可使用。
@@ -70,7 +75,7 @@ curl -fsSL https://raw.githubusercontent.com/Luxuzhou/source-verifier-skill/mast
 ## 环境要求
 
 - Claude Code（CLI 或 Desktop）
-- 不需要额外的 API key，Claude Code 内置的 WebSearch 就够用
+- 不需要额外的 API key
 
 **可选增强**（有则更好，没有也能跑）：
 - `mcp__duckduckgo` — 多搜索引擎交叉验证
@@ -83,4 +88,4 @@ MIT
 
 ---
 
-Made by [陆徐洲](https://github.com/Luxuzhou) — 一家 LIMS 公司的 AI 算法负责人
+Made by [陆徐洲](https://github.com/Luxuzhou)
