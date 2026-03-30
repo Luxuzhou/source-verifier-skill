@@ -1,68 +1,86 @@
 # Source Verifier - 信源可靠性研判引擎
 
-A Claude Code Skill for verifying information credibility using the NATO Admiralty Code framework.
+> 不是帮你搜信息，是帮你判断信息该信几分。
 
-## What It Does
+一个 Claude Code Skill，基于 NATO Admiralty Code 双维度评估体系，对任意信息进行多源采集、交叉验证和可解释的置信度评级。
 
-Source Verifier is not a research tool — it's a **credibility assessment engine**. It takes claims, statements, or articles and evaluates how much you should trust them.
-
-Core capabilities:
-- **Claim extraction**: Breaks down complex statements into verifiable atomic claims
-- **Multi-source collection**: Searches across multiple engines for both supporting and contradicting evidence
-- **Cross-verification**: Detects source dependency chains, contradictions, and silence signals
-- **NATO Admiralty Code rating**: Dual-axis assessment (Source Reliability A-F + Information Credibility 1-6)
-- **Explainable reasoning**: Every rating comes with a full reasoning chain tagged as [Fact], [Opinion], or [Inference]
-
-## Installation
-
-### Claude Code
+## 一键安装
 
 ```bash
 git clone https://github.com/Luxuzhou/source-verifier-skill.git ~/.claude/skills/source-verifier
 ```
 
-## Usage
+或者用安装脚本（支持更新）：
 
-In Claude Code, type:
-
-```
-/source-verifier OpenAI released GPT-5
+```bash
+curl -fsSL https://raw.githubusercontent.com/Luxuzhou/source-verifier-skill/master/install.sh | bash
 ```
 
-Or verify a URL:
+装好后重启 Claude Code，输入 `/source-verifier` 即可使用。
 
+## 快速上手
+
+**验证一条声明：**
+```
+/source-verifier GPT-5 已经发布
+```
+
+**验证一篇文章：**
 ```
 /source-verifier https://example.com/some-article
 ```
 
-### Verification Depth
+**对已有研究报告做信源核查：**
+```
+/source-verifier
+> 请对刚才的研究报告做全面深度研判
+```
 
-| Depth | Queries | Min Sources | Use Case |
-|-------|---------|-------------|----------|
-| Quick check | 2-3 | 3 | Simple facts (release dates, version numbers) |
-| Standard | 5-8 | 5 | News and statement verification |
-| Deep assessment | 10-15 | 8 | Controversial topics, decision-critical claims |
+## 它会做什么
 
-## Rating System
+1. **提取声明** — 从你的输入中拆解出可验证的原子声明
+2. **多源采集** — 并行搜索正反两面的证据（WebSearch + DuckDuckGo + HN 等）
+3. **交叉验证** — 检测信源独立性、矛盾点、沉默信号、时间线
+4. **输出研判报告** — 每条声明给出 Admiralty Code 评级 + 完整推理链
 
-**Source Reliability (A-F)**:
-- A: Completely reliable (primary sources, official announcements)
-- B: Usually reliable (Reuters, AP, top journals)
-- C: Fairly reliable (industry media with editorial review)
-- D-F: Unreliable to cannot be judged
+## 评级体系
 
-**Information Credibility (1-6)**:
-- 1: Confirmed (2+ independent A/B sources)
-- 2: Probably true (1 A/B source, no contradictions)
-- 3-6: Possibly true to cannot be judged
+**来源可靠性（A-F）**
 
-A rating of B-2 means "source usually reliable, information probably true".
+| 等级 | 含义 | 示例 |
+|------|------|------|
+| A | 完全可靠 | 当事方官方公告、原始研究论文 |
+| B | 通常可靠 | Reuters、AP、顶级学术期刊 |
+| C | 较为可靠 | 有编辑审核的行业媒体（36氪、InfoQ） |
+| D | 通常不可靠 | 无审核的自媒体、匿名爆料 |
+| E-F | 不可靠/无法判断 | 有虚假传播历史的来源、全新来源 |
 
-## Requirements
+**信息可信度（1-6）**
 
-- Claude Code (CLI or Desktop)
-- Optional MCP servers: duckduckgo, hacker-news, jina (improve coverage but not required)
+| 等级 | 含义 |
+|------|------|
+| 1 | 已确认（2+ 独立 A/B 级来源） |
+| 2 | 很可能真实（1 个 A/B 来源，无矛盾） |
+| 3 | 可能真实（C 级来源，符合背景） |
+| 4 | 存疑（仅 D 级来源，或有矛盾） |
+| 5-6 | 不太可能/无法判断 |
+
+评级示例：`B-2` = 来源通常可靠 + 信息很可能真实。
+
+## 环境要求
+
+- Claude Code（CLI 或 Desktop）
+- 不需要额外的 API key，Claude Code 内置的 WebSearch 就够用
+
+**可选增强**（有则更好，没有也能跑）：
+- `mcp__duckduckgo` — 多搜索引擎交叉验证
+- `mcp__hacker-news` — 技术社区讨论信号
+- `mcp__jina` — 备用内容提取
 
 ## License
 
 MIT
+
+---
+
+Made by [陆徐洲](https://github.com/Luxuzhou) — 一家 LIMS 公司的 AI 算法负责人
