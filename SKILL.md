@@ -104,8 +104,7 @@ allowed-tools:
 
 对步骤 2.1 搜索结果中最相关的 5-8 个 URL，提取全文内容。采用 **Scrapling 智能分级提取** 作为核心提取引擎：
 
-**Scrapling CLI 路径**: `C:/Users/luxuzhou/AppData/Roaming/Python/Python313/Scripts/scrapling.exe`
-（下文简写为 `scrapling`，实际调用时使用 Bash 工具执行完整路径）
+**Scrapling CLI**: 如果已安装（`pip install scrapling`），直接使用 `scrapling` 命令。如果未安装或不可用，跳过 Scrapling 层级，直接使用 Fallback 链（mcp__jina → WebFetch）。
 
 ##### 步骤 2.2.0: SPA 站点预判（L1 跳过规则）
 
